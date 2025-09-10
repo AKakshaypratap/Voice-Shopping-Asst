@@ -40,8 +40,7 @@ const Home = () => {
                 quantity: 1,
                 price: price
             };
-
-            const response = await axios.post("http://localhost:5000/add", itemData);
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/add`, itemData);
             
             if (response.data.success) {
                 toast.success(`${product.name} added to your shopping list!`);

@@ -14,11 +14,12 @@ const List = () => {
     const [listening, setListening] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    console.log(import.meta.env.VITE_BACKEND_URL);
 
     const fetchList = async () => {
         try {
             setLoading(true);
-            const response = await axios.get("http://localhost:5000/list");
+            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/list`);
             setList(response.data.items);
             toast.success(`Loaded ${response.data.items.length} items from your list`);
         } catch (error) {
@@ -39,7 +40,7 @@ const List = () => {
 
     const handleDeleteItem = async (itemId, itemName) => {
         try {
-            await axios.delete(`http://localhost:5000/delete/${itemId}`);
+            await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/delete/${itemId}`);
             // Update the list immediately without page refresh
             setList(prevList => prevList.filter(item => item._id !== itemId));
             toast.success(`${itemName} deleted successfully!`);
@@ -61,11 +62,10 @@ const List = () => {
                         </div>
                         <button
                             onClick={handleVoiceClick}
-                            className={`px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 ${
-                                listening 
-                                    ? "bg-red-500 text-white animate-pulse" 
-                                    : "bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700"
-                            }`}
+                            className={`px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 ${listening
+                                ? "bg-red-500 text-white animate-pulse"
+                                : "bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700"
+                                }`}
                         >
                             {listening ? "Listening..." : <FaMicrophoneAlt />}
                         </button>
@@ -100,11 +100,11 @@ const List = () => {
                                     Click <FaTrash /> to remove items
                                 </div>
                             </div>
-                            
+
                             <div className="grid gap-3">
                                 {list?.map((item, index) => (
-                                    <div 
-                                        key={item._id} 
+                                    <div
+                                        key={item._id}
                                         className="bg-gradient-to-r from-white to-gray-50 border border-gray-200 rounded-lg p-4 hover:shadow-md transition-all duration-200 transform hover:scale-[1.02]"
                                     >
                                         <div className="flex justify-between items-center">
@@ -132,10 +132,10 @@ const List = () => {
                                                 </div>
                                             </div>
 
-                                            <FaTrash 
-                                            onClick={() => handleDeleteItem(item._id, item.name)}
-                                            title={`Delete ${item.name}`}
-                                            className='text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-all duration-200 transform hover:scale-110'
+                                            <FaTrash
+                                                onClick={() => handleDeleteItem(item._id, item.name)}
+                                                title={`Delete ${item.name}`}
+                                                className='text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-all duration-200 transform hover:scale-110'
                                             />
                                         </div>
                                     </div>

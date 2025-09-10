@@ -12,7 +12,7 @@ const startListening = (setListening, navigate, fetchList) => {
 
         if (transcript.includes("add")) {
             const itemName = transcript.replace("add", "").trim();
-            await axios.post("http://localhost:5000/add", {
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/add`, {
                 name: itemName,
                 category: "uncategorized",
                 quantity: 1,
@@ -26,7 +26,7 @@ const startListening = (setListening, navigate, fetchList) => {
             }
         } else if (transcript.includes("remove") || transcript.includes("delete")) {
             const itemName = transcript.replace("delete", "").replace("remove", "").trim();
-            await axios.delete(`http://localhost:5000/remove/${itemName}`);
+            await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/remove/${itemName}`);
             toast.success(`${itemName} deleted successfully!`);
             // Only call fetchList if it's provided (when called from List page)
             if (fetchList && typeof fetchList === 'function') {

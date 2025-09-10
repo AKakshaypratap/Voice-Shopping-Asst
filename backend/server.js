@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const itemRoutes = require("./routes/itemRoutes");
+require("dotenv").config();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -16,18 +17,13 @@ main().then(() => {
 
 // MongoDB Connection
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/shopping", {
+  await mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 }
 
-// mongoose.connect(mongoUrl, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
 app.use("/", itemRoutes);
 
 
-app.listen(5000, () => console.log("Backend running on http://localhost:5000"));
+app.listen(5000, () => console.log("Backend running on PORT 5000"));
