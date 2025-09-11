@@ -119,6 +119,11 @@ const Home = () => {
                                     </>
                                 )}
                             </button>
+                            {!listening && (
+                                <div className="mt-3 text-sm text-gray-600">
+                                <p>Speak clearly like "Add milk" or "Add bread" to add products to your shopping list</p>
+                            </div>
+                            )}
                             {listening && (
                                 <p className="mt-3 text-sm text-gray-600">
                                     Speak clearly into your microphone
